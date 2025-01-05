@@ -7,14 +7,15 @@
     <title>Captcha</title>
     <style>
         .form-captcha {
-            max-width: 400px; /* Define a largura máxima do formulário */
-            margin: auto; /* Centraliza o formulário na página */
+            max-width: 400px;
+            margin: auto;
+            padding: 2rem;            
         }
     </style>
 </head>
 <body class="text-center">
-    <main class="form-captcha mt-5"> <!-- Adicionando margem superior -->
-        <img src="https://cdn.icon-icons.com/icons2/2699/PNG/512/google_recaptcha_logo_icon_170062.png" alt="Captcha Icon" class="mb-3" width="72" height="72"> <!-- Ícone do CAPTCHA -->
+    <main class="form-captcha mt-5"> 
+        <img src="https://cdn.icon-icons.com/icons2/2699/PNG/512/google_recaptcha_logo_icon_170062.png" alt="Captcha Icon" class="mb-3" width="72" height="72">
 
         <div th:if="${error}" style="color: red;">
             <p th:text="${error}"></p>
@@ -23,7 +24,7 @@
         <form th:action="@{/verify-captcha}" method="post">
             <div class="mb-3">
                 <label for="captchaInput" class="form-label">Digite o CAPTCHA:</label>
-                <span th:text="${senha}" style="font-weight: bold; margin-left: 10px;"></span> <!-- CAPTCHA exibido aqui -->
+                <span th:text="${senha}" style="font-weight: bold; margin-left: 10px;"></span> 
                 <input type="text" id="captchaInput" name="captchaInput" class="form-control" required>
             </div>
             <div>
