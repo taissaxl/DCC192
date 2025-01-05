@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+   <title>Sign-in Example</title>
+   <style>
+       .form-signin {
+           max-width: 400px; /* Define a largura máxima do formulário */
+           margin: auto; /* Centraliza o formulário na página */
+       }
+   </style>
+</head>
+<body class="text-center">
+    <main class="form-signin mt-5"> <!-- Adicionando margem superior -->
+        <form action="menu" method="GET">
+            <img class="mb-4" src="https://cdn-icons-png.flaticon.com/512/11284/11284777.png" alt="Login logo" width="72" height="72">
+            <h1 class="h3 mb-3 fw-normal">Login</h1>
+            <div class="form-floating">
+                <input type="text" class="form-control" id="name" name="name" placeholder="Digite seu nome" required>
+                <label for="name">Nome</label>
+            </div>
+
+            <button class="w-100 btn btn-lg btn-primary mt-3" type="submit">Entrar</button> <!-- Adicionando margem superior ao botão -->
+        </form>
+        
+        <!-- Botão para redirecionar para bootstrap.html -->
+        <a href="/bootstrap" class="w-100 btn btn-lg btn-secondary mt-3">Ir para Bootstrap</a>
+        
+        <p class="mt-5 mb-3 text-muted">© 2023</p>
+    </main>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
