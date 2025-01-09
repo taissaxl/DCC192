@@ -8,12 +8,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
@@ -23,16 +18,21 @@ public class HomeController {
     @Autowired
     private GeradorSenha geradorSenha;
 
+    @Autowired
+    private UsuarioRepository usuarioRepository; // Repositório para operações de CRUD
+
     private String captchaAtual;
 
+    // Rota principal (CAPTCHA)
     @RequestMapping("/")
     public ModelAndView home() {
-        ModelAndView mv = new ModelAndView("captcha.html");
-        captchaAtual = geradorSenha.GerarSenha(); // Gera a senha do CAPTCHA
-        mv.addObject("senha", captchaAtual); // Passa a senha para a página
+        ModelAndView mv = new ModelAndView("usuarios");
+        List<Usuario> lu = usuarioRepository.findAll();
+        mv.addObject("usuarios", lu);
         return mv;
     }
 
+    // Verificação do CAPTCHA
     @PostMapping("/verify-captcha")
     public ModelAndView verifyCaptcha(@RequestParam String captchaInput) {
         ModelAndView mv = new ModelAndView();
@@ -48,19 +48,21 @@ public class HomeController {
         return mv;
     }
 
+    // Login do usuário
     @PostMapping("/login")
     public ModelAndView login(@RequestParam String name, Model model) {
         // Cria um Map para representar o usuário
         Map<String, String> usuario = new HashMap<>();
         usuario.put("nome", name); // Armazena o nome do usuário no Map
-    
+
         // Armazena o usuário na sessão
         model.addAttribute("usuario", usuario);
-    
+
         // Redireciona para a página inicial
         return new ModelAndView("redirect:/index");
     }
 
+    // Página inicial
     @GetMapping("/index")
     public ModelAndView index(@ModelAttribute("usuario") Map<String, String> usuario) {
         ModelAndView mv = new ModelAndView("index");
@@ -83,6 +85,7 @@ public class HomeController {
         return mv;
     }
 
+    // Seleção de CAPTCHA
     @GetMapping("/captcha")
     public ModelAndView captcha(@RequestParam String captchaOption) {
         ModelAndView mv = new ModelAndView("captcha.html");
@@ -91,6 +94,7 @@ public class HomeController {
         return mv;
     }
 
+    // Logout
     @GetMapping("/logout")
     public ModelAndView getMethodLogout() {
         ModelAndView mv = new ModelAndView();
@@ -99,11 +103,13 @@ public class HomeController {
         return mv;
     }
 
+    // Página Bootstrap
     @GetMapping("/bootstrap")
     public ModelAndView bootstrap() {
         return new ModelAndView("bootstrap.html");
     }
 
+    // Página de Informações
     @GetMapping("/info")
     public ModelAndView info() {
         return new ModelAndView("info.html");
