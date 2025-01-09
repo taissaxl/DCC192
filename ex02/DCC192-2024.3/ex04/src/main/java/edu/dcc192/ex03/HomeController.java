@@ -24,11 +24,11 @@ public class HomeController {
     private String captchaAtual;
 
     // Rota principal (CAPTCHA)
-    @RequestMapping("/")
+    @GetMapping("/")
     public ModelAndView home() {
-        ModelAndView mv = new ModelAndView("usuarios");
-        List<Usuario> lu = usuarioRepository.findAll();
-        mv.addObject("usuarios", lu);
+        ModelAndView mv = new ModelAndView("captcha");
+        captchaAtual = geradorSenha.GerarSenha();
+        mv.addObject("senha", captchaAtual);
         return mv;
     }
 
@@ -37,9 +37,9 @@ public class HomeController {
     public ModelAndView verifyCaptcha(@RequestParam String captchaInput) {
         ModelAndView mv = new ModelAndView();
         if (captchaInput.equals(captchaAtual)) {
-            mv.setViewName("login.html");
+            mv.setViewName("login");
         } else {
-            mv.setViewName("captcha.html");
+            mv.setViewName("captcha");
             mv.addObject("error", "CAPTCHA incorreto. Tente novamente.");
             // Gera um novo CAPTCHA
             captchaAtual = geradorSenha.GerarSenha();
@@ -88,7 +88,7 @@ public class HomeController {
     // Seleção de CAPTCHA
     @GetMapping("/captcha")
     public ModelAndView captcha(@RequestParam String captchaOption) {
-        ModelAndView mv = new ModelAndView("captcha.html");
+        ModelAndView mv = new ModelAndView("captcha");
         mv.addObject("senha", captchaOption); // Passa a senha selecionada para a página
         captchaAtual = captchaOption; // Atualiza a variável captchaAtual com a opção selecionada
         return mv;
@@ -113,5 +113,14 @@ public class HomeController {
     @GetMapping("/info")
     public ModelAndView info() {
         return new ModelAndView("info.html");
+    }
+
+    // Página de Usuários
+    @GetMapping("/usuarios")
+    public ModelAndView usuarios() {
+        ModelAndView mv = new ModelAndView("usuarios");
+        List<Usuario> lu = usuarioRepository.findAll();
+        mv.addObject("usuarios", lu);
+        return mv;
     }
 }
