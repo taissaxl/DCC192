@@ -19,7 +19,7 @@ public class HomeController {
     private GeradorSenha geradorSenha;
 
     @Autowired
-    private UsuarioRepository usuarioRepository; // Repositório para operações de CRUD
+    private UsuarioRepository ur;
 
     private String captchaAtual;
 
@@ -115,12 +115,29 @@ public class HomeController {
         return new ModelAndView("info.html");
     }
 
-    // Página de Usuários
+    // Exibe o formulário para adicionar um novo usuário
+    @GetMapping("/novo-usuario")
+    public ModelAndView novoUsuario() {
+        ModelAndView mv = new ModelAndView();
+        mv.setViewName("form.html"); // Define a view do formulário
+        mv.addObject("usuario", new Usuario()); // Adiciona um novo objeto Usuario ao modelo
+        return mv;
+    }
+
+    // Salva o usuário e redireciona para a lista de usuários
+    @PostMapping("/salvar-usuario")
+    public String salvarUsuario(@ModelAttribute Usuario usuario) {
+        ur.save(usuario); // Salva o usuário no banco de dados
+        return "redirect:/usuarios"; // Redireciona para a página de usuários
+    }
+
+    // Lista de usuários
     @GetMapping("/usuarios")
-    public ModelAndView usuarios() {
-        ModelAndView mv = new ModelAndView("usuarios");
-        List<Usuario> lu = usuarioRepository.findAll();
-        mv.addObject("usuarios", lu);
+    public ModelAndView listarUsuarios() {
+        ModelAndView mv = new ModelAndView();
+        mv.setViewName("usuarios");
+        List<Usuario> usuarios = ur.findAll(); // Busca todos os usuários
+        mv.addObject("usuarios", usuarios); // Passa a lista de usuários para a view
         return mv;
     }
 }
