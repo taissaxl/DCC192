@@ -23,7 +23,7 @@
             <p th:text="'Olá, ' + ${userName} + '!' " class="user-greeting mb-0"></p>
         </div>
         <p class="h5">Escolha um CAPTCHA:</p>
-        <form action="captcha" method="get">
+        <form action="/login-with-captcha" method="get">
             <select name="captchaOption" class="form-select w-100" required>
                 <option th:each="captcha : ${captchaOptions}" 
                         th:value="${captcha}" 
