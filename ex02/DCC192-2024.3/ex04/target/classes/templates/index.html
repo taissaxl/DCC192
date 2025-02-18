@@ -19,7 +19,7 @@
 <body class="text-center">
     <main class="form-index mt-5"> 
         <div class="d-flex flex-column align-items-center justify-content-center mb-3">
-            <img src="https://cdn-icons-png.flaticon.com/128/12515/12515988.png" alt="User  Icon" width="72" height="72" class="mb-2">
+            <img src="https://cdn-icons-png.flaticon.com/128/12515/12515988.png" alt="User Icon" width="72" height="72" class="mb-2">
             <p th:text="'Olá, ' + ${userName} + '!' " class="user-greeting mb-0"></p>
         </div>
         <p class="h5">Escolha um CAPTCHA:</p>
@@ -33,6 +33,10 @@
         </form>
         <a href="/info" class="w-100 btn btn-lg btn-secondary mt-3">Info</a>
         <a href="/usuarios" class="w-100 btn btn-lg btn-info mt-3">Usuários</a>
+
+        <!-- Botões para gerar erros -->
+        <a href="/erro-404" class="w-100 btn btn-lg btn-danger mt-3">Gerar Erro 404</a>
+        <a href="/erro-java" class="w-100 btn btn-lg btn-warning mt-3">Gerar Erro Java</a>
     </main>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
