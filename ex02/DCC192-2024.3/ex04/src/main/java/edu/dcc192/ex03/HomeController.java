@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.NoHandlerFoundException;
 
 @Controller
 @SessionAttributes("usuario")
@@ -141,5 +142,17 @@ public class HomeController {
         List<Usuario> usuarios = ur.findAll();
         mv.addObject("usuarios", usuarios);
         return mv;
+    }
+
+    // Rota para gerar um erro 404
+    @GetMapping("/erro-404")
+    public String erro404() throws NoHandlerFoundException {
+        throw new NoHandlerFoundException("GET", "/erro.html", null);
+    }
+
+    // Rota para gerar um erro de Java
+    @GetMapping("/erro-java")
+    public String erroJava() {
+        throw new RuntimeException("Erro no tratamento de dados");
     }
 }
