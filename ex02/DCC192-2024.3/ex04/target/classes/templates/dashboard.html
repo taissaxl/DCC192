@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="pt" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard de Logins</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f4f4f4;
+        }
+        .chart-container {
+            width: 80%;
+            max-width: 900px;
+            height: 500px;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        canvas {
+            width: 100% !important;
+            height: 400px !important;
+        }
+        .button-container {
+            margin-top: 20px;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+        }
+        .button-container button {
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .button-container button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="chart-container">
+        <h2>Dashboard de Logins</h2>
+        <canvas id="loginChart"></canvas>
+        <div class="button-container">
+            <button onclick="window.location.href='/index'">Voltar para o Menu</button>
+        </div>
+    </div>
+
+    <script th:inline="javascript">
+        var loginsJson = /*[[${loginData}]]*/ [];
+        console.log(loginsJson);
+    
+        var labels = [];
+        var datasets = [];
+    
+        if (loginsJson.length > 0) {
+            labels = Object.keys(loginsJson[0].logins);
+    
+            loginsJson.forEach(function(user) {
+                var dataPoints = labels.map(date => user.logins[date] || 0);
+                
+                datasets.push({
+                    label: user.nome,
+                    data: dataPoints,
+                    borderWidth: 1,
+                    backgroundColor: `rgba(${Math.random() * 255}, ${Math.random() * 255}, ${Math.random() * 255}, 0.7)`,
+                    borderColor: `rgba(${Math.random() * 255}, ${Math.random() * 255}, ${Math.random() * 255}, 1)`
+                });
+            });
+        }
+    
+        new Chart(document.getElementById('loginChart'), {
+            type: 'bar',
+            data: {
+                labels: labels,
+                datasets: datasets
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: true,
+                scales: {
+                    x: { beginAtZero: true },
+                    y: { beginAtZero: true }
+                },
+                plugins: {
+                    legend: {
+                        position: 'top',
+                    },
+                    title: {
+                        display: true,
+                        text: 'Logins por Dia'
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
